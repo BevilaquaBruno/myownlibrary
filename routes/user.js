@@ -14,7 +14,7 @@ router.post('/login', function (req, res) {
     res.render('user/formLogin', {message: 'Dados inválidos'});
   }else{
     req.body.password = md5(req.body.password);
-    userModel.find({username: req.body.username, password: req.body.password},'-password -created',null , function (err, docs) {
+    userModel.findOne({username: req.body.username, password: req.body.password},'-password -created',null , function (err, docs) {
       if (err != undefined && err.length > 0) {
         res.render('user/formLogin', {message: 'Erro ao entrar no sistema.'});
       }else if (docs === undefined || docs.length == 0) {

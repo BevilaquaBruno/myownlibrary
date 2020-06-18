@@ -1,0 +1,22 @@
+<form action="/user/register" method="post">
+  <div>
+    <input type="text" name="_id" id="_id" value="{{user._id}}">
+  </div>
+  <div>
+    Nome:
+    <input type="text" name="name" id="name" value={{user.name}}>
+  </div>
+  <div>
+    Email:
+    <input type="password" name="email" id="email" value={{user.email}}>
+  </div>
+  <div>
+    Password:
+    <input type="password" name="password" id="password" value={{user.password}}>
+    Confirm Password
+    <input type="text" name="confirmpassword" id="confirmpassword">
+  </div>
+  <div>
+    <input type="submit" name="Entrar" value="Entrar">
+  </div>
+</form>

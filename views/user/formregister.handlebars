@@ -1,4 +1,11 @@
-<form action="/user/register" method="post">
+<div>
+  {{message}}
+</div>
+{{#if newUser }}
+  <form action="/user/register" method="post">
+{{else}}
+  <form action="/user/update" method="post">
+{{/if}}
   <div>
     <input type="text" name="_id" id="_id" value="{{user._id}}">
   </div>
@@ -8,15 +15,19 @@
   </div>
   <div>
     Email:
-    <input type="password" name="email" id="email" value={{user.email}}>
+    <input type="text" name="email" id="email" value={{user.email}}>
   </div>
   <div>
-    Password:
+    Usuário:
+    <input type="text" name="username" id="username" value={{user.username}}>
+  </div>
+  <div>
+    Senha:
     <input type="password" name="password" id="password" value={{user.password}}>
-    Confirm Password
-    <input type="text" name="confirmpassword" id="confirmpassword">
+    Confirmar senha:
+    <input type="password" name="confirmpassword" id="confirmpassword">
   </div>
   <div>
-    <input type="submit" name="Entrar" value="Entrar">
+    <input type="submit" name="Cadastrar" value="Cadasstrar">
   </div>
 </form>

@@ -13,7 +13,7 @@ var md5 = require('md5');
 
  userSchema.pre('save', function(next){
    var user = this;
-   if (!author.isModified('password')) {
+   if (!user.isModified('password')) {
      return next;
    }
 

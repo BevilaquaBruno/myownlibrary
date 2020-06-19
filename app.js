@@ -12,7 +12,7 @@ var session = require('express-session');
 
 var app = express()
 
-mongoose.connect('mongodb://bevilaqua:bruno123@ds259154.mlab.com:59154/bevilaqualibrary', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://bevilaqua:bruno123@ds259154.mlab.com:59154/bevilaqualibrary', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

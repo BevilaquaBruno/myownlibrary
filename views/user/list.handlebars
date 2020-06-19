@@ -3,8 +3,8 @@ users list
 <br>
 {{#if success}}
   {{#each users}}
-    {{ this.name }} - {{ this.email }}
+    {{ this.name }} - {{ this.email }} - {{ this.username }} <a href="/user/update/{{this._id}}">atualizar</a>
     <br>
   {{/each}}
 {{/if}}
-<a href="/user/register">Register new user</a>
+<a href="/user/register">Cadastrar novo usuário</a>

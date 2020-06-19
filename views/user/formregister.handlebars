@@ -11,7 +11,7 @@
   </div>
   <div>
     Nome:
-    <input type="text" name="name" id="name" value={{user.name}}>
+    <input type="text" name="name" id="name" value="{{user.name}}">
   </div>
   <div>
     Email:
@@ -21,13 +21,15 @@
     Usuário:
     <input type="text" name="username" id="username" value={{user.username}}>
   </div>
+  {{#if newUser }}
   <div>
     Senha:
     <input type="password" name="password" id="password" value={{user.password}}>
     Confirmar senha:
     <input type="password" name="confirmpassword" id="confirmpassword">
   </div>
+  {{/if}}
   <div>
-    <input type="submit" name="Cadastrar" value="Cadasstrar">
+    <input type="submit" name="btnsubmit" value="{{ btnValue }}">
   </div>
 </form>

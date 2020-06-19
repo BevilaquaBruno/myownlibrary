@@ -3,6 +3,7 @@ var router = express.Router();
 var userModel = require('../schemas/user');
 var passport = require('passport');
 var validator = require('validator');
+var helper = require('../lib/helper');
 
 router.get('/',
   require('connect-ensure-login').ensureLoggedIn('/login'),
@@ -10,9 +11,9 @@ router.get('/',
     userModel.find({}, '-password -createdAt -updatedAt', null,
       function (err, users) {
         if (err) {
-          res.render('user/list', { success: false, message : 'Erro ao pegar usuários', users: {} });
+          res.render('user/list', { success: false, message : 'Erro ao pegar usuários', users: [] });
         }else{
-          res.render('user/list', { success: true, message : req.flash('tip'), users: users });
+          res.render('user/list', { success: true, message : req.flash('tip'), users: helper.tojson(users) });
         }
       }
     )

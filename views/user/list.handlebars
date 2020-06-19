@@ -2,6 +2,9 @@ users list
 {{ message }}
 <br>
 {{#if success}}
-  {{users}}
+  {{#each users}}
+    {{ this.name }} - {{ this.email }}
+    <br>
+  {{/each}}
 {{/if}}
 <a href="/user/register">Register new user</a>

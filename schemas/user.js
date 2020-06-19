@@ -5,8 +5,7 @@ var md5 = require('md5');
    name: { type: String },
    email: { type: String, required: true },
    username: { type: String, required: true },
-   password: { type: String, required: true },
-   created: { type: Date, default: Date.now }
+   password: { type: String, required: true }
  },{
    timestamps: true
  });

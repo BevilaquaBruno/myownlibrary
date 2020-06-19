@@ -7,7 +7,15 @@ var validator = require('validator');
 router.get('/',
   require('connect-ensure-login').ensureLoggedIn('/login'),
   function (req, res) {
-    res.render('user/list', { message : req.flash('tip')});
+    userModel.find({}, '-password -createdAt -updatedAt', null,
+      function (err, users) {
+        if (err) {
+          res.render('user/list', { success: false, message : 'Erro ao pegar usuários', users: {} });
+        }else{
+          res.render('user/list', { success: true, message : req.flash('tip'), users: users });
+        }
+      }
+    )
   }
 );
 
@@ -23,18 +31,23 @@ router.post('/register',
   function(req, res){
     if ( !validator.isEmail(req.body.email) ) {
       res.render('user/formregister', { message: 'Email inválido.', newUser: true, user: req.body });
+      return;
     }
     if (req.body.password == '') {
       res.render('user/formregister', { message: 'Senha é obrigatório.', newUser: true, user: req.body });
+      return;
     }
     if (req.body.username == '') {
       res.render('user/formregister', { message: 'Usuário é obrigatório.', newUser: true, user: req.body });
+      return;
     }
     if (req.body.password != req.body.confirmpassword) {
       res.render('user/formregister', { message: 'As senhas não coincidem.', newUser: true, user: req.body });
+      return;
     }
-    if(req.body.name == '' || validator.isAlphanumeric(req.body.name)){
+    if(req.body.name == '' || !validator.isAlphanumeric(req.body.name)){
       res.render('user/formregister', { message: 'Nome é obrigatório.', newUser: true, user: req.body });
+      return;
     }
     var newUser = new userModel({name: req.body.name, email: req.body.email, password: req.body.password, username: req.body.username});
     newUser.save().then(user => {
@@ -42,6 +55,7 @@ router.post('/register',
       res.redirect('/user');
     }).catch(err => {
       res.render('user/formregister', { message: 'Erro ao cadastrar usuário', newUser: true, user: req.body });
+      return;
     });
   }
  );

@@ -7,7 +7,7 @@
   <form action="/user/update" method="post">
 {{/if}}
   <div>
-    <input type="text" name="_id" id="_id" value="{{user._id}}">
+    <input type="hidden" name="_id" id="_id" value="{{user._id}}">
   </div>
   <div>
     Nome:
@@ -31,5 +31,7 @@
   {{/if}}
   <div>
     <input type="submit" name="btnsubmit" value="{{ btnValue }}">
+    <br>
+    <a href="/user">Lista de usuários</a>
   </div>
 </form>

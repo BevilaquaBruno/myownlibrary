@@ -65,7 +65,6 @@ router.get('/update/:id',
           req.flash('tip', 'Erro ao buscar usuário.');
           return res.redirect('/user');
         }
-        console.log((helper.tojson([user]))[0]);
         res.render('user/formregister', { message: '', btnValue: 'Atualizar', newUser: false, user: (helper.tojson([user]))[0] });
       }
     );

@@ -76,7 +76,7 @@ app.get('/login', function(req, res){
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function (req, res) {
-    res.redirect('/book');
+    res.redirect('/livro');
   }
 );
 
@@ -88,8 +88,8 @@ app.get('/logout', function (req, res) {
 var userRouter = require('./routes/user');
 var authorRouter = require('./routes/author');
 
-app.use('/user', userRouter);
-app.use('/author', authorRouter);
+app.use('/usuario', userRouter);
+app.use('/autor', authorRouter);
 
 app.use('*', function (req, res) {
     res.render('404Page');

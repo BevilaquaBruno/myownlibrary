@@ -2,9 +2,9 @@
   {{message}}
 </div>
 {{#if newUser }}
-  <form action="/user/register" method="post">
+  <form action="/usuario/cadastrar" method="post">
 {{else}}
-  <form action="/user/update" method="post">
+  <form action="/usuario/atualizar" method="post">
 {{/if}}
   <div>
     <input type="hidden" name="_id" id="_id" value="{{user._id}}">
@@ -32,6 +32,6 @@
   <div>
     <input type="submit" name="btnsubmit" value="{{ btnValue }}">
     <br>
-    <a href="/user">Lista de usuários</a>
+    <a href="/usuario">Lista de usuários</a>
   </div>
 </form>

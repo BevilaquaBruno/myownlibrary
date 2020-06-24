@@ -20,14 +20,14 @@ router.get('/',
   }
 );
 
-router.get('/register',
+router.get('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function(req, res){
     res.render('user/formregister', { message: '', btnValue: 'Cadastrar', newUser: true, user : { name: '', email: '', username: '', password: '', _id: '' } });
   }
 );
 
-router.post('/register',
+router.post('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function(req, res){
     if ( !validator.isEmail(req.body.email) ) {
@@ -48,14 +48,14 @@ router.post('/register',
     var newUser = new userModel({name: req.body.name, email: req.body.email, password: req.body.password, username: req.body.username});
     newUser.save().then(user => {
       req.flash('tip', 'Usuário cadastrado com sucesso.');
-      res.redirect('/user');
+      res.redirect('/usuario');
     }).catch(err => {
       return res.render('user/formregister', { message: 'Erro ao cadastrar usuário', btnValue: 'Cadastrar', newUser: true, user: req.body });
     });
   }
  );
 
-router.get('/update/:id',
+router.get('/atualizar/:id',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     var id = req.params.id;
@@ -63,7 +63,7 @@ router.get('/update/:id',
       function (err, user) {
         if (err) {
           req.flash('tip', 'Erro ao buscar usuário.');
-          return res.redirect('/user');
+          return res.redirect('/usuario');
         }
         res.render('user/formregister', { message: '', btnValue: 'Atualizar', newUser: false, user: (helper.tojson([user]))[0] });
       }
@@ -71,7 +71,7 @@ router.get('/update/:id',
   }
 );
 
-router.post('/update',
+router.post('/atualizar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     if ( !validator.isEmail(req.body.email) ) {
@@ -94,12 +94,12 @@ router.post('/update',
           return res.render('user/formregister', { message: 'Erro ao atualizar usuário.', btnValue: 'Atualizar', newUser: false, user: req.body });
         }
         req.flash('tip', 'Usuário atualizado com sucesso !');
-        res.redirect('/user');
+        res.redirect('/usuario');
     });
   }
 );
 
-router.get('/delete/:id',
+router.get('/excluir/:id',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     if (req.params.id != '') {
@@ -109,7 +109,7 @@ router.get('/delete/:id',
         }else{
           req.flash('tip', 'Sucesso ao excluir usuário.');
         }
-        res.redirect('/user');
+        res.redirect('/usuario');
       });
     }
   }

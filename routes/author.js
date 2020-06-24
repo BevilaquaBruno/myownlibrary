@@ -68,4 +68,21 @@ router.post('/cadastrar',
   }
 );
 
+router.get('/atualizar/:id', 
+  conn.ensureLoggedIn('/login'),
+  function (req, res) {
+    var id = req.params.id;
+    authorModel.findById(id, '-createdAt -updatedAt', null,
+      function (err, author) {
+        if (err) {
+          req.flash('tip', 'Erro ao buscar autor.');
+          return res.redirect('/autor');
+        }
+        author = (helper.tojson([author]))[0];
+        return res.render('author/formregister', { message: '', newAuthor: false, author: author });
+      }
+    );
+  }
+);
+
 module.exports = router;

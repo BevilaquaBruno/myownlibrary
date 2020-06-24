@@ -1,12 +1,12 @@
 const express = require('express');
 var router = express.Router();
 var userModel = require('../schemas/user');
-var passport = require('passport');
 var validator = require('validator');
 var helper = require('../lib/helper');
+var conn = require('connect-ensure-login');
 
 router.get('/',
-  require('connect-ensure-login').ensureLoggedIn('/login'),
+  conn.ensureLoggedIn('/login'),
   function (req, res) {
     userModel.find({}, '-password -createdAt -updatedAt', null,
       function (err, users) {
@@ -21,14 +21,14 @@ router.get('/',
 );
 
 router.get('/register',
-  require('connect-ensure-login').ensureLoggedIn('/login'),
+  conn.ensureLoggedIn('/login'),
   function(req, res){
     res.render('user/formregister', { message: '', btnValue: 'Cadastrar', newUser: true, user : { name: '', email: '', username: '', password: '', _id: '' } });
   }
 );
 
 router.post('/register',
-  require('connect-ensure-login').ensureLoggedIn('/login'),
+  conn.ensureLoggedIn('/login'),
   function(req, res){
     if ( !validator.isEmail(req.body.email) ) {
       return res.render('user/formregister', { message: 'Email inválido.', btnValue: 'Cadastrar', newUser: true, user: req.body });
@@ -56,7 +56,7 @@ router.post('/register',
  );
 
 router.get('/update/:id',
-  require('connect-ensure-login').ensureLoggedIn('/login'),
+  conn.ensureLoggedIn('/login'),
   function (req, res) {
     var id = req.params.id;
     userModel.findById(id, '-password -createdAt -updatedAt', null,
@@ -72,7 +72,7 @@ router.get('/update/:id',
 );
 
 router.post('/update',
-  require('connect-ensure-login').ensureLoggedIn('/login'),
+  conn.ensureLoggedIn('/login'),
   function (req, res) {
     if ( !validator.isEmail(req.body.email) ) {
       return res.render('user/formregister', { message: 'Email inválido.', btnValue: 'Atualizar', newUser: false, user: req.body });;
@@ -96,6 +96,22 @@ router.post('/update',
         req.flash('tip', 'Usuário atualizado com sucesso !');
         res.redirect('/user');
     });
+  }
+);
+
+router.get('/delete/:id',
+  conn.ensureLoggedIn('/login'),
+  function (req, res) {
+    if (req.params.id != '') {
+      userModel.findByIdAndDelete(req.params.id, null, function (err, doc) {
+        if (err) {
+          req.flash('tip', 'Erro ao excluir usuário.');
+        }else{
+          req.flash('tip', 'Sucesso ao excluir usuário.');
+        }
+        res.redirect('/user');
+      });
+    }
   }
 );
 

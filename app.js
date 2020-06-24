@@ -65,6 +65,10 @@ passport.deserializeUser(function(id, callback) {
     });
   });
 
+app.get('/', function (req, res) {
+  res.render('home');
+})
+
 app.get('/login', function(req, res){
   res.render('login', { message: req.flash('error')});
 });
@@ -72,7 +76,7 @@ app.get('/login', function(req, res){
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function (req, res) {
-    res.redirect('/user');
+    res.redirect('/book');
   }
 );
 

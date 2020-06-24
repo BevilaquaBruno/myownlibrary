@@ -7,9 +7,8 @@ var authorSchema = mongoose.Schema({
   death_date: { type: Date },
   born_state: { type: String },
   born_city: { type: String },
-  books_writed: { type: Number },
-  main_language: { type: mongoose.Schema.Types.ObjectId, ref: 'Language' }, 
-  born_country: { type: mongoose.Schema.Types.ObjectId, ref: 'Country' },
+  language_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Language' }, 
+  country_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Country' },
 },{
   timestamps: true
 });

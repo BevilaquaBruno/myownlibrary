@@ -85,11 +85,18 @@ app.get('/logout', function (req, res) {
   res.redirect('/login');
 });
 
+app.use('/javascript', express.static(__dirname + '/public'));
+app.use('/axios', express.static(__dirname + '/node_modules/axios/dist/'));
+
 var userRouter = require('./routes/user');
 var authorRouter = require('./routes/author');
+var languageRouter = require('./routes/language');
+var countryRouter = require('./routes/country');
 
 app.use('/usuario', userRouter);
 app.use('/autor', authorRouter);
+app.use('/idioma', languageRouter);
+app.use('/pais', countryRouter);
 
 app.use('*', function (req, res) {
     res.render('404Page');

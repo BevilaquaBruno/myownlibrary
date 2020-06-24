@@ -1,0 +1,60 @@
+<div>
+  {{message}}
+</div>
+{{#if newAuthor }}
+  <form action="/autor/cadastrar" method="post">
+{{else}}
+  <form action="/autor/atualizar" method="post">
+{{/if}}
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{author._id}}">
+    <input type="hidden" name="old_country_id" id="old_country_id" value="{{author.country_id}}">
+    <input type="hidden" name="old_language_id" id="old_language_id" value="{{author.language_id}}">
+  </div>
+  <div>
+    Nome Público (como autor):
+    <input type="text" name="public_name" id="public_name" value="{{author.public_name}}">
+  </div>
+  <div>
+    Nome Completo:
+    <input type="text" name="entire_name" id="entire_name" value={{author.entire_name}}>
+  </div>
+  <div>
+    Data de Nascimento:
+    <input type="text" name="born_date" id="born_date" value={{author.born_date}}>
+  </div>
+  <div>
+    Data de Falecimento:
+    <input type="text" name="death_date" id="death_date" value={{author.death_date}}>
+  </div>
+  <div>
+    Estado de Nascimento
+    <input type="text" name="born_state" id="born_state" value={{author.born_state}}>
+  </div>
+  <div>
+    Cidade de Nascimento
+    <input type="text" name="born_city" id="born_city" value={{author.born_city}}>
+  </div>
+  <div>
+    Idioma:
+    <select name="language_id" id="language_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    País:
+    <select name="country_id" id="country_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    {{#if newAuthor}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/autor">Lista de autores</a>
+  </div>
+</form>
+<script type="application/javascript" src="/javascript/formauthor.js"></script>

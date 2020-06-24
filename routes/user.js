@@ -5,6 +5,16 @@ var validator = require('validator');
 var helper = require('../lib/helper');
 var conn = require('connect-ensure-login');
 
+function createAndReturnUser(data, id='') {
+  return({
+    name: data.name,
+    email: data.email,
+    password: data.password,
+    username: data.username,
+    _id: id
+  });
+}
+
 router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
@@ -23,34 +33,37 @@ router.get('/',
 router.get('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function(req, res){
-    res.render('user/formregister', { message: '', btnValue: 'Cadastrar', newUser: true, user : { name: '', email: '', username: '', password: '', _id: '' } });
+    res.render('user/formregister', { message: '', newUser: true, user : { name: '', email: '', username: '', password: '', _id: '' } });
   }
 );
 
 router.post('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function(req, res){
-    if ( !validator.isEmail(req.body.email) ) {
-      return res.render('user/formregister', { message: 'Email inválido.', btnValue: 'Cadastrar', newUser: true, user: req.body });
+    let currentUser = createAndReturnUser(req.body);
+    if(currentUser.name == ''){
+      return res.render('user/formregister', { message: 'Nome é obrigatório.', newUser: true, user: currentUser });
     }
-    if (req.body.password == '') {
-      return res.render('user/formregister', { message: 'Senha é obrigatório.', btnValue: 'Cadastrar', newUser: true, user: req.body });
+    if ( !validator.isEmail(currentUser.email) ) {
+      return res.render('user/formregister', { message: 'Email inválido.', newUser: true, user: currentUser });
     }
-    if (req.body.username == '') {
-      return res.render('user/formregister', { message: 'Usuário é obrigatório.', btnValue: 'Cadastrar', newUser: true, user: req.body });
+    if (currentUser.username == '') {
+      return res.render('user/formregister', { message: 'Usuário é obrigatório.', newUser: true, user: currentUser });
     }
-    if (req.body.password != req.body.confirmpassword) {
-      return res.render('user/formregister', { message: 'As senhas não coincidem.', btnValue: 'Cadastrar', newUser: true, user: req.body });
+    if (currentUser.password == '') {
+      return res.render('user/formregister', { message: 'Senha é obrigatório.', newUser: true, user: currentUser });
     }
-    if(req.body.name == ''){
-      return res.render('user/formregister', { message: 'Nome é obrigatório.', btnValue: 'Cadastrar', newUser: true, user: req.body });
+    if (currentUser.password != req.body.confirmpassword) {
+      return res.render('user/formregister', { message: 'As senhas não coincidem.', newUser: true, user: currentUser });
     }
-    var newUser = new userModel({name: req.body.name, email: req.body.email, password: req.body.password, username: req.body.username});
+    let nu = currentUser;
+    delete nu._id;
+    let newUser = new userModel(nu);
     newUser.save().then(user => {
       req.flash('tip', 'Usuário cadastrado com sucesso.');
       res.redirect('/usuario');
     }).catch(err => {
-      return res.render('user/formregister', { message: 'Erro ao cadastrar usuário', btnValue: 'Cadastrar', newUser: true, user: req.body });
+      return res.render('user/formregister', { message: 'Erro ao cadastrar usuário', newUser: true, user: currentUser });
     });
   }
  );
@@ -65,7 +78,7 @@ router.get('/atualizar/:id',
           req.flash('tip', 'Erro ao buscar usuário.');
           return res.redirect('/usuario');
         }
-        res.render('user/formregister', { message: '', btnValue: 'Atualizar', newUser: false, user: (helper.tojson([user]))[0] });
+        res.render('user/formregister', { message: '', newUser: false, user: (helper.tojson([user]))[0] });
       }
     );
   }
@@ -74,24 +87,25 @@ router.get('/atualizar/:id',
 router.post('/atualizar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    if ( !validator.isEmail(req.body.email) ) {
-      return res.render('user/formregister', { message: 'Email inválido.', btnValue: 'Atualizar', newUser: false, user: req.body });;
+    let currentUser = createAndReturnUser(req.body, req.body._id);
+    if ( !validator.isEmail(currentUser.email) ) {
+      return res.render('user/formregister', { message: 'Email inválido.', newUser: false, user: currentUser });;
     }
-    if (req.body.password == '') {
-      return res.render('user/formregister', { message: 'Senha é obrigatório.', btnValue: 'Atualizar', newUser: false, user: req.body });
+    if (currentUser.password == '') {
+      return res.render('user/formregister', { message: 'Senha é obrigatório.', newUser: false, user: currentUser });
     }
-    if (req.body.username == '') {
-      return res.render('user/formregister', { message: 'Usuário é obrigatório.', btnValue: 'Atualizar', newUser: false, user: req.body });
+    if (currentUser.username == '') {
+      return res.render('user/formregister', { message: 'Usuário é obrigatório.', newUser: false, user: currentUser });
     }
-    if(req.body.name == ''){
-      return res.render('user/formregister', { message: 'Nome é obrigatório.', btnValue: 'Atualizar', newUser: false, user: req.body });
+    if(currentUser.name == ''){
+      return res.render('user/formregister', { message: 'Nome é obrigatório.', newUser: false, user: currentUser });
     }
-    userModel.findOneAndUpdate({ _id: req.body._id }, { $set: {
-      name: req.body.name,
-      email: req.body.email,
-      username: req.body.username } }, (err, user) =>{
+    userModel.findOneAndUpdate({ _id: currentUser._id }, { $set: {
+      name: currentUser.name,
+      email: currentUser.email,
+      username: currentUser.username } }, (err, user) =>{
         if (err) {
-          return res.render('user/formregister', { message: 'Erro ao atualizar usuário.', btnValue: 'Atualizar', newUser: false, user: req.body });
+          return res.render('user/formregister', { message: 'Erro ao atualizar usuário.', newUser: false, user: currentUser });
         }
         req.flash('tip', 'Usuário atualizado com sucesso !');
         res.redirect('/usuario');

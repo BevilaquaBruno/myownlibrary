@@ -30,7 +30,11 @@
   </div>
   {{/if}}
   <div>
-    <input type="submit" name="btnsubmit" value="{{ btnValue }}">
+    {{#if newUser}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
     <br>
     <a href="/usuario">Lista de usuários</a>
   </div>

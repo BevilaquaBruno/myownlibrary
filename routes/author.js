@@ -25,14 +25,12 @@ router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     authorModel.find().populate('language_id').populate('country_id').select('-createdAt -updatedAt')
-      .exec(function (err, authors) {
-        if (err) {
-          res.render('author/list', { success: false, message : 'Erro ao pegar autores', authors: [] });
-        }else{
-          res.render('author/list', { success: true, message : req.flash('tip'), authors: helper.tojson(authors) });
-        }
+      .then(authors => {
+        res.render('author/list', { success: true, message : req.flash('tip'), authors: helper.tojson(authors) });
       }
-    )
+    ).catch(err => {
+      res.render('author/list', { success: false, message : 'Erro ao pegar autores', authors: [] });
+    });
   }
 );
 
@@ -93,17 +91,18 @@ router.post('/cadastrar',
 router.get('/atualizar/:id',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    var id = req.params.id;
-    authorModel.findById(id, '-createdAt -updatedAt', null,
-      function (err, author) {
-        if (err) {
-          req.flash('tip', 'Erro ao buscar autor.');
-          return res.redirect('/autor');
-        }
+    if (req.params.id != '') {
+      authorModel.findById(req.params.id).select('-createdAt -updatedAt').then(author => {
         author = (helper.tojson([author]))[0];
         return res.render('author/formregister', { message: '', newAuthor: false, author: author });
-      }
-    );
+      }).catch(err => {
+        req.flash('tip', 'Erro ao buscar autor.');
+        return res.redirect('/autor');
+      });
+    }else{
+      req.flash('tip', 'Erro ao buscar autor.');
+      return res.redirect('/autor');
+    }
   }
 );
 
@@ -147,14 +146,14 @@ router.post('/atualizar',
       born_state: currentAuthor.born_state,
       born_city: currentAuthor.born_city,
       language_id: currentAuthor.language_id,
-      country_id: currentAuthor.country_id, } }, (err, author) =>{
-        if (err) {
-          log('AuthorUpdate|err:'+err+'|U:'+req.user, 'error');
-          return res.render('author/formregister', { message: 'Erro ao atualizar autor.', newAuthor: false, author: currentAuthor });
-        }
+      country_id: currentAuthor.country_id } })
+    .then(author =>{
         req.flash('tip', 'Autor atualizado com sucesso !');
         log('AuthorUpdate|Author:'+author+'|U:'+req.user, 'success');
         res.redirect('/autor');
+    }).catch(err => {
+      log('AuthorUpdate|err:'+err+'|U:'+req.user, 'error');
+      return res.render('author/formregister', { message: 'Erro ao atualizar autor.', newAuthor: false, author: currentAuthor });
     });
   }
 );
@@ -163,16 +162,16 @@ router.get('/excluir/:id',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     if (req.params.id != '') {
-      authorModel.findByIdAndDelete(req.params.id, null, function (err, doc) {
-        if (err) {
-          log('AuthorDelete|err:'+err+'|U:'+req.user, 'error');
-          req.flash('tip', 'Erro ao excluir autor.');
-        }else{
+      authorModel.findByIdAndDelete(req.params.id)
+        .then(author => {
           log('AuthorDelete|Author_id:'+req.params.id+'|U:'+req.user, 'success');
           req.flash('tip', 'Sucesso ao excluir autor.');
-        }
-        res.redirect('/autor');
-      });
+          res.redirect('/autor');
+        }).catch(err => {
+          log('AuthorDelete|err:'+err+'|U:'+req.user, 'error');
+          req.flash('tip', 'Erro ao excluir autor.');
+          res.redirect('/autor');
+        });
     }else{
       req.flash('tip', 'Erro ao excluir autor.');
       res.redirect('/autor');

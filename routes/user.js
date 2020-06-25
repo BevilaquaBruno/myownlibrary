@@ -19,15 +19,11 @@ function createAndReturnUser(data, id='') {
 router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    userModel.find({}, '-password -createdAt -updatedAt', null,
-      function (err, users) {
-        if (err) {
-          res.render('user/list', { success: false, message : 'Erro ao pegar usuários', users: [] });
-        }else{
-          res.render('user/list', { success: true, message : req.flash('tip'), users: helper.tojson(users) });
-        }
-      }
-    )
+    userModel.find().select('-password -createdAt -updatedAt').then(users =>{
+      res.render('user/list', { success: true, message : req.flash('tip'), users: helper.tojson(users) });
+    }).catch(err =>{
+      res.render('user/list', { success: false, message : 'Erro ao pegar usuários', users: [] });
+    });
   }
 );
 
@@ -75,16 +71,17 @@ router.post('/cadastrar',
 router.get('/atualizar/:id',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    var id = req.params.id;
-    userModel.findById(id, '-password -createdAt -updatedAt', null,
-      function (err, user) {
-        if (err) {
-          req.flash('tip', 'Erro ao buscar usuário.');
-          return res.redirect('/usuario');
-        }
+    if(req.params.id != ''){
+      userModel.findById(req.params.id).select('-password -createdAt -updatedAt').then(user => {
         res.render('user/formregister', { message: '', newUser: false, user: (helper.tojson([user]))[0] });
-      }
-    );
+      }).catch(err => {
+        req.flash('tip', 'Erro ao buscar usuário.');
+        return res.redirect('/usuario');
+      });
+    }else{
+      req.flash('tip', 'Erro ao buscar usuário.');
+      return res.redirect('/usuario');
+    }
   }
 );
 
@@ -105,14 +102,14 @@ router.post('/atualizar',
     userModel.findOneAndUpdate({ _id: currentUser._id }, { $set: {
       name: currentUser.name,
       email: currentUser.email,
-      username: currentUser.username } }, (err, user) =>{
-        if (err){
-          log('UserUpdate|err:'+err+'|U:'+req.user, 'error');
-          return res.render('user/formregister', { message: 'Erro ao atualizar usuário.', newUser: false, user: currentUser });
-        }
+      username: currentUser.username } })
+    .then(user => {
         log('UserUpdate|user:'+user+'|U:'+req.user, 'success');
         req.flash('tip', 'Usuário atualizado com sucesso !');
         res.redirect('/usuario');
+    }).catch(err => {
+      log('UserUpdate|err:'+err+'|U:'+req.user, 'error');
+      return res.render('user/formregister', { message: 'Erro ao atualizar usuário.', newUser: false, user: currentUser });
     });
   }
 );
@@ -121,17 +118,16 @@ router.get('/excluir/:id',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     if (req.params.id != '') {
-      userModel.findByIdAndDelete(req.params.id, null, function (err, doc) {
-        if (err){
-          log('UserDelete|err:'+err+'|U:'+req.user, 'error');
-          req.flash('tip', 'Erro ao excluir usuário.');
-        }else{
+      userModel.findByIdAndDelete(req.params.id)
+        .then(user => {
           log('UserDelete|User_id:'+req.params.id+'|U:'+req.user, 'success');
           req.flash('tip', 'Sucesso ao excluir usuário.');
-        }
-
-        res.redirect('/usuario');
-      });
+          res.redirect('/usuario');
+        }).catch(err => {
+          log('UserDelete|err:'+err+'|U:'+req.user, 'error');
+          req.flash('tip', 'Erro ao excluir usuário.');
+          res.redirect('/usuario');
+        });
     }else{
       req.flash('tip', 'Erro ao excluir usuário');
       res.redirect('/usuario');

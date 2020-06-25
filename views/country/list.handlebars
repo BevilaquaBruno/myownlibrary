@@ -1,0 +1,12 @@
+countries list
+{{ message }}
+<br>
+{{#if success}}
+  {{#each countries}}
+    {{ this.name }}
+      <a href="/pais/atualizar/{{this._id}}">atualizar</a>&nbsp;
+      <a href="/pais/excluir/{{this._id}}">Deletar</a>
+    <br>
+  {{/each}}
+{{/if}}
+<a href="/pais/cadastrar">Cadastrar novo País</a>

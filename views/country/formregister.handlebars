@@ -1,0 +1,25 @@
+<div>
+  {{message}}
+</div>
+{{#if newCountry}}
+  <form action="/pais/cadastrar" method="post">
+{{else}}
+  <form action="/pais/atualizar" method="post">
+{{/if}}
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{country._id}}">
+  </div>
+  <div>
+    Nome:
+    <input type="text" name="name" id="name" value="{{country.name}}">
+  </div>
+  <div>
+    {{#if newCountry}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/pais">Lista de países</a>
+  </div>
+</form>

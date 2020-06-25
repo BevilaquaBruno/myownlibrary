@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var languageSchema = mongoose.Schema({
   description: { type: String, required: true },
-  name: { type: String }
+  country_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Country' },
 },{
   timestamps: true
 });

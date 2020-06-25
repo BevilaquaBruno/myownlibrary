@@ -125,6 +125,9 @@ router.get('/excluir/:id',
         }
         res.redirect('/usuario');
       });
+    }else{
+      req.flash('tip', 'Erro ao excluir usuário');
+      res.redirect('/usuario');
     }
   }
 );

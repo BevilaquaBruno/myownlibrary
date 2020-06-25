@@ -13,6 +13,7 @@
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
     "helmet": "^3.23.0",
+    "log-to-file": "^2.0.2",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
     "mongoose": "^5.9.18",

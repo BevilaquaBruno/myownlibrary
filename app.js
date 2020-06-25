@@ -8,7 +8,7 @@ var Strategy = require('passport-local').Strategy;
 const passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
-
+var log = require('./log').log;
 
 var app = express()
 
@@ -76,11 +76,13 @@ app.get('/login', function(req, res){
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function (req, res) {
+    log('Login'+'|U:'+req.user, 'login');
     res.redirect('/livro');
   }
 );
 
 app.get('/logout', function (req, res) {
+  log('Logout'+'|U:'+req.user, 'login');
   req.logout();
   res.redirect('/login');
 });

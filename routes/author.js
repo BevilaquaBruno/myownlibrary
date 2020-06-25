@@ -6,6 +6,7 @@ var conn = require('connect-ensure-login');
 var validator = require('validator');
 var moment = require('moment');
 moment.locale('pt-br');
+var log = require('../log').log;
 
 function createAndReturnAuthor(data, id='') {
   return({
@@ -79,10 +80,11 @@ router.post('/cadastrar',
     delete na._id;
     let newAuthor = new authorModel(na);
     newAuthor.save().then(author => {
+      log('AuthorRegister|Author:'+author+'|U:'+req.user, 'success');
       req.flash('tip', 'Autor cadastrado com sucesso.');
       res.redirect('/autor');
     }).catch(err => {
-      console.log(err);
+      log('AuthorRegister|err:'+err+'|U:'+req.user, 'error');
       return res.render('author/formregister', { message: 'Erro ao cadastrar autor', newAuthor: true, author: currentAuthor });
     });
   }
@@ -147,9 +149,11 @@ router.post('/atualizar',
       language_id: currentAuthor.language_id,
       country_id: currentAuthor.country_id, } }, (err, author) =>{
         if (err) {
+          log('AuthorUpdate|err:'+err+'|U:'+req.user, 'error');
           return res.render('author/formregister', { message: 'Erro ao atualizar autor.', newAuthor: false, author: currentAuthor });
         }
         req.flash('tip', 'Autor atualizado com sucesso !');
+        log('AuthorUpdate|Author:'+author+'|U:'+req.user, 'success');
         res.redirect('/autor');
     });
   }
@@ -161,8 +165,10 @@ router.get('/excluir/:id',
     if (req.params.id != '') {
       authorModel.findByIdAndDelete(req.params.id, null, function (err, doc) {
         if (err) {
+          log('AuthorDelete|err:'+err+'|U:'+req.user, 'error');
           req.flash('tip', 'Erro ao excluir autor.');
         }else{
+          log('AuthorDelete|Author_id:'+req.params.id+'|U:'+req.user, 'success');
           req.flash('tip', 'Sucesso ao excluir autor.');
         }
         res.redirect('/autor');

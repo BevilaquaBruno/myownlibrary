@@ -3,7 +3,7 @@ authors list
 <br>
 {{#if success}}
   {{#each authors}}
-    {{ this.public_name }} - {{ this.entire_name }} - {{ this.born_date }} - {{ this.death_date }} - 
+    {{ this.public_name }} - {{ this.entire_name }} - {{ this.born_date }} - {{ this.death_date }} -
     {{ this.born_city }} - {{ this.born_state }} - {{ this.books_writed }} {{ this.language_id.description }} - {{ this.country_id.name}} |
       <a href="/autor/atualizar/{{this._id}}">atualizar</a>&nbsp;
       <a href="/autor/excluir/{{this._id}}">Deletar</a>

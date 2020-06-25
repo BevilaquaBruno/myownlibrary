@@ -3,7 +3,7 @@ users list
 <br>
 {{#if success}}
   {{#each users}}
-    {{ this.name }} - {{ this.email }} - {{ this.username }} | 
+    {{ this.name }} - {{ this.email }} - {{ this.username }} |
       <a href="/usuario/atualizar/{{this._id}}">atualizar</a>&nbsp;
       <a href="/usuario/excluir/{{this._id}}">Deletar</a>
     <br>

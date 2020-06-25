@@ -5,7 +5,7 @@ var validator = require('validator');
 var helper = require('../lib/helper');
 var conn = require('connect-ensure-login');
 
-router.get('/todos', 
+router.get('/todos',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     countryModel.find().then(function (countries) {

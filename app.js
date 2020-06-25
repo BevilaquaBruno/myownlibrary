@@ -97,6 +97,8 @@ app.get('/logout',
   conn.ensureLoggedIn('/'),
   function (req, res) {
     log('Logout'+'|U:'+req.user, 'login');
+    app.locals.isLogged = false;
+    app.locals.user = {};
     req.logout();
     res.redirect('/login');
 });

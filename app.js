@@ -87,6 +87,7 @@ app.get('/logout', function (req, res) {
 
 app.use('/javascript', express.static(__dirname + '/public'));
 app.use('/axios', express.static(__dirname + '/node_modules/axios/dist/'));
+app.use('/moment', express.static(__dirname + '/node_modules/moment/'));
 
 var userRouter = require('./routes/user');
 var authorRouter = require('./routes/author');

@@ -41,21 +41,22 @@ router.post('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function(req, res){
     let currentUser = createAndReturnUser(req.body);
-    if(currentUser.name == ''){
+
+    if(currentUser.name == '')
       return res.render('user/formregister', { message: 'Nome é obrigatório.', newUser: true, user: currentUser });
-    }
-    if ( !validator.isEmail(currentUser.email) ) {
+
+    if (!validator.isEmail(currentUser.email))
       return res.render('user/formregister', { message: 'Email inválido.', newUser: true, user: currentUser });
-    }
-    if (currentUser.username == '') {
+
+    if (currentUser.username == '')
       return res.render('user/formregister', { message: 'Usuário é obrigatório.', newUser: true, user: currentUser });
-    }
-    if (currentUser.password == '') {
+
+    if (currentUser.password == '')
       return res.render('user/formregister', { message: 'Senha é obrigatório.', newUser: true, user: currentUser });
-    }
-    if (currentUser.password != req.body.confirmpassword) {
+
+    if (currentUser.password != req.body.confirmpassword)
       return res.render('user/formregister', { message: 'As senhas não coincidem.', newUser: true, user: currentUser });
-    }
+
     let nu = currentUser;
     delete nu._id;
     let newUser = new userModel(nu);
@@ -88,25 +89,25 @@ router.post('/atualizar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     let currentUser = createAndReturnUser(req.body, req.body._id);
-    if ( !validator.isEmail(currentUser.email) ) {
+    if ( !validator.isEmail(currentUser.email) )
       return res.render('user/formregister', { message: 'Email inválido.', newUser: false, user: currentUser });;
-    }
-    if (currentUser.password == '') {
+
+    if (currentUser.password == '')
       return res.render('user/formregister', { message: 'Senha é obrigatório.', newUser: false, user: currentUser });
-    }
-    if (currentUser.username == '') {
+
+    if (currentUser.username == '')
       return res.render('user/formregister', { message: 'Usuário é obrigatório.', newUser: false, user: currentUser });
-    }
-    if(currentUser.name == ''){
+
+    if(currentUser.name == '')
       return res.render('user/formregister', { message: 'Nome é obrigatório.', newUser: false, user: currentUser });
-    }
+
     userModel.findOneAndUpdate({ _id: currentUser._id }, { $set: {
       name: currentUser.name,
       email: currentUser.email,
       username: currentUser.username } }, (err, user) =>{
-        if (err) {
+        if (err)
           return res.render('user/formregister', { message: 'Erro ao atualizar usuário.', newUser: false, user: currentUser });
-        }
+
         req.flash('tip', 'Usuário atualizado com sucesso !');
         res.redirect('/usuario');
     });
@@ -118,11 +119,11 @@ router.get('/excluir/:id',
   function (req, res) {
     if (req.params.id != '') {
       userModel.findByIdAndDelete(req.params.id, null, function (err, doc) {
-        if (err) {
+        if (err)
           req.flash('tip', 'Erro ao excluir usuário.');
-        }else{
+        else
           req.flash('tip', 'Sucesso ao excluir usuário.');
-        }
+
         res.redirect('/usuario');
       });
     }else{

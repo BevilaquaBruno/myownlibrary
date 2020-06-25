@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Example App</title>
+    <title>{{ pagetitle }}</title>
     <script type="application/javascript" src="/axios/axios.min.js"></script>
     <script type="application/javascript" src="/moment/moment.js"></script>
     <script type="application/javascript" src="/javascript/functions.js"></script>
@@ -12,8 +12,11 @@
   <div>
     Main Layout
     <a href="/">Home</a>
-    <a href="/login">login</a>
-    <a href="/logout">logout</a>
+    {{#if isLogged}}
+      <a href="/logout">logout</a>
+    {{else}}
+      <a href="/login">login</a>
+    {{/if}}
     <a href="/usuario">Usuários</a>
     <a href="/autor">Autores</a>
     <a href="/pais">Países</a>

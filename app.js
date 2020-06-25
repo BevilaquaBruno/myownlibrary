@@ -9,6 +9,7 @@ const passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
 var log = require('./log').log;
+var conn = require('connect-ensure-login');
 
 var app = express()
 
@@ -65,11 +66,22 @@ passport.deserializeUser(function(id, callback) {
     });
   });
 
+app.use('*', function (req, res, next) {
+  app.locals.pagetitle = 'Bilioteca Bevilaqua';
+  if (req.user) {
+    app.locals.isLogged = true;
+    app.locals.user = req.user;
+  }
+  next();
+});
+
 app.get('/', function (req, res) {
   res.render('home');
 })
 
-app.get('/login', function(req, res){
+app.get('/login',
+  conn.ensureLoggedOut('/livro'),
+  function(req, res){
   res.render('login', { message: req.flash('error')});
 });
 
@@ -81,10 +93,12 @@ app.post('/login',
   }
 );
 
-app.get('/logout', function (req, res) {
-  log('Logout'+'|U:'+req.user, 'login');
-  req.logout();
-  res.redirect('/login');
+app.get('/logout',
+  conn.ensureLoggedIn('/'),
+  function (req, res) {
+    log('Logout'+'|U:'+req.user, 'login');
+    req.logout();
+    res.redirect('/login');
 });
 
 app.use('/javascript', express.static(__dirname + '/public'));

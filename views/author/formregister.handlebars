@@ -10,6 +10,8 @@
     <input type="hidden" name="_id" id="_id" value="{{author._id}}">
     <input type="hidden" name="old_country_id" id="old_country_id" value="{{author.country_id}}">
     <input type="hidden" name="old_language_id" id="old_language_id" value="{{author.language_id}}">
+    <input type="hidden" name="born_date" id="born_date" value="{{author.born_date}}">
+    <input type="hidden" name="death_date" id="death_date" value="{{author.death_date}}">
   </div>
   <div>
     Nome Público (como autor):
@@ -21,11 +23,11 @@
   </div>
   <div>
     Data de Nascimento:
-    <input type="date" name="born_date" id="born_date" value="{{author.born_date}}">
+    <input onblur="formatDateInput(this,'born_date');" type="date" name="born_date_input" id="born_date_input" value="{{author.born_date}}">
   </div>
   <div>
     Data de Falecimento:
-    <input type="date" name="death_date" id="death_date" value="{{author.death_date}}">
+    <input onblur="formatDateInput(this,'death_date');" type="date" name="death_date_input" id="death_date_input" value="{{author.death_date}}">
   </div>
   <div>
     Estado de Nascimento

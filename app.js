@@ -103,7 +103,7 @@ app.get('/logout',
     res.redirect('/login');
 });
 
-app.use('/javascript', express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 app.use('/axios', express.static(__dirname + '/node_modules/axios/dist/'));
 app.use('/moment', express.static(__dirname + '/node_modules/moment/'));
 

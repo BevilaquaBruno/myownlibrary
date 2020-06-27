@@ -45,7 +45,7 @@ router.post('/cadastrar',
       res.redirect('/pais');
     }).catch(err => {
       log('CountryRegister|err:'+err+'|U:'+req.user, 'error');
-      return res.render('country/formregister', { message: 'Erro ao cadastrar País', newCountry: true, author: req.body });
+      return res.render('country/formregister', { message: 'Erro ao cadastrar País', newCountry: true, country: req.body });
     });
   }
 );

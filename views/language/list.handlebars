@@ -1,0 +1,12 @@
+languages list
+{{ message }}
+<br>
+{{#if success}}
+  {{#each languages}}
+    {{ this.description }} - {{ this.country_id.name }}
+      <a href="/idioma/atualizar/{{this._id}}">atualizar</a>&nbsp;
+      <a href="/idioma/excluir/{{this._id}}">Deletar</a>
+    <br>
+  {{/each}}
+{{/if}}
+<a href="/idioma/cadastrar">Cadastrar novo Idioma</a>

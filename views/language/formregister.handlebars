@@ -1,0 +1,33 @@
+<div>
+  {{message}}
+</div>
+{{#if newLanguage}}
+  <form action="/idioma/cadastrar" method="post">
+{{else}}
+  <form action="/idioma/atualizar" method="post">
+{{/if}}
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{language._id}}">
+    <input type="hidden" name="old_country_id" id="old_country_id" value="{{language.country_id}}">
+  </div>
+  <div>
+    Descrição:
+    <input type="text" name="description" id="description" value="{{language.description}}">
+  </div>
+  <div>
+    País:
+    <select name="country_id" id="country_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    {{#if newLanguage}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/idioma">Lista de Idiomas</a>
+  </div>
+</form>
+<script type="application/javascript" src="/public/javascript/formLanguage.js"></script>

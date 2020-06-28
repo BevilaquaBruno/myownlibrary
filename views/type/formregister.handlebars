@@ -1,0 +1,25 @@
+<div>
+  {{message}}
+</div>
+{{#if newType}}
+  <form action="/tipo/cadastrar" method="post">
+{{else}}
+  <form action="/tipo/atualizar" method="post">
+{{/if}}
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{type._id}}">
+  </div>
+  <div>
+    Nome:
+    <input type="text" name="description" id="description" value="{{type.description}}">
+  </div>
+  <div>
+    {{#if newType}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/tipo">Lista de Tipos</a>
+  </div>
+</form>

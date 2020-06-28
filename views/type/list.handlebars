@@ -1,0 +1,12 @@
+types list
+{{ message }}
+<br>
+{{#if success}}
+  {{#each types}}
+    {{ this.description }}
+      <a href="/tipo/atualizar/{{this._id}}">atualizar</a>&nbsp;
+      <a href="/tipo/excluir/{{this._id}}">Deletar</a>
+    <br>
+  {{/each}}
+{{/if}}
+<a href="/tipo/cadastrar">Cadastrar novo Tipo</a>

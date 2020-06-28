@@ -36,7 +36,7 @@ router.post('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     if (req.body.description == '') {
-      return res.render('type/formregister', { message: 'Nome é obrigatório.', newType: true, type: req.body });
+      return res.render('type/formregister', { message: 'Descrição é obrigatória.', newType: true, type: req.body });
     }
     let newType = new typeModel({ description: req.body.description });
     newType.save().then(type => {
@@ -72,7 +72,7 @@ router.post('/atualizar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     if (req.body.description == '') {
-      return res.render('type/formregister', { message: 'Nome é obrigatório.', newType: false, type: req.body });
+      return res.render('type/formregister', { message: 'Descrição é obrigatória.', newType: false, type: req.body });
     }
     if (req.body._id == '') {
       req.flash('tip', 'Erro grave ao atualizar tipo, comece de novo.');

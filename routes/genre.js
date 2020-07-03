@@ -20,7 +20,7 @@ router.get('/',
     genreModel.find().select('-createdAt -updatedAt').then(genres => {
       res.render('genre/list', { success: true, message : req.flash('tip'), genres: helper.tojson(genres) });
     }).catch(err => {
-      res.render('genre/list', { success: false, message : 'Erro ao buscar autores', genres: [] });
+      res.render('genre/list', { success: false, message : 'Erro ao buscar gêneros', genres: [] });
     });
   }
 );

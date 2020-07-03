@@ -1,7 +1,6 @@
 const express = require('express');
 var router = express.Router();
 var languageModel = require('../schemas/language');
-var validator = require('validator');
 var helper = require('../lib/helper');
 var conn = require('connect-ensure-login');
 var log = require('../log').log;

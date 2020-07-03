@@ -1,0 +1,25 @@
+<div>
+  {{message}}
+</div>
+{{#if newGenre}}
+  <form action="/genero/cadastrar" method="post">
+{{else}}
+  <form action="/genero/atualizar" method="post">
+{{/if}}
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{genre._id}}">
+  </div>
+  <div>
+    Descrição:
+    <input type="text" name="description" id="description" value="{{genre.description}}">
+  </div>
+  <div>
+    {{#if newGenre}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/genero">Lista de Gêneros</a>
+  </div>
+</form>

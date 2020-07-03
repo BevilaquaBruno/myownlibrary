@@ -1,0 +1,12 @@
+genres list
+{{ message }}
+<br>
+{{#if success}}
+  {{#each genres}}
+    {{this.description}}
+      <a href="/genero/atualizar/{{this._id}}">atualizar</a>&nbsp;
+      <a href="/genero/excluir/{{this._id}}">Deletar</a>
+    <br>
+  {{/each}}
+{{/if}}
+<a href="/genero/cadastrar">Cadastrar novo Gênero</a>

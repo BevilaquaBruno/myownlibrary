@@ -112,12 +112,14 @@ var authorRouter = require('./routes/author');
 var languageRouter = require('./routes/language');
 var countryRouter = require('./routes/country');
 var typeRouter = require('./routes/type');
+var genreRouter = require('./routes/genre');
 
 app.use('/usuario', userRouter);
 app.use('/autor', authorRouter);
 app.use('/idioma', languageRouter);
 app.use('/pais', countryRouter);
 app.use('/tipo', typeRouter);
+app.use('/genero', genreRouter);
 
 app.use('*', function (req, res) {
     res.render('404Page');

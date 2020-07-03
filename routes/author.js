@@ -21,6 +21,15 @@ function createAndReturnAuthor(data, id='') {
     _id: id });
 }
 
+router.get('/todos',
+  conn.ensureLoggedIn('/login'),
+  function (req, res) {
+    authorModel.find().then(function (authors) {
+        res.json({ authors: authors });
+    })
+  }
+);
+
 router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {

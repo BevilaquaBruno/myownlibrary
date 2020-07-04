@@ -1,0 +1,33 @@
+<div>
+  {{message}}
+</div>
+{{#if newPublisher }}
+  <form action="/editora/cadastrar" method="post">
+{{else}}
+  <form action="/editora/atualizar" method="post">
+{{/if}}
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{publisher._id}}">
+    <input type="hidden" name="old_country_id" id="old_country_id" value="{{publisher.country_id}}">
+  </div>
+  <div>
+    Nome
+    <input type="text" name="name" id="name" value="{{publisher.name}}">
+  </div>
+  <div>
+    País:
+    <select name="country_id" id="country_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    {{#if newPublisher}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/autor">Lista de Editoras</a>
+  </div>
+</form>
+<script type="application/javascript" src="/public/javascript/formpublisher.js"></script>

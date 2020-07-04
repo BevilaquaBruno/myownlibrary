@@ -82,7 +82,7 @@ router.post('/atualizar',
     genreModel.findOneAndUpdate({ _id: req.body._id }, { description: req.body.description })
     .then( genre => {
       req.flash('tip', 'genero atualizado com sucesso !');
-      log('GenreUpdate|Country:'+genre+'|U:'+req.user, 'success');
+      log('GenreUpdate|Genre:'+genre+'|U:'+req.user, 'success');
       res.redirect('/genero');
     }).catch(err => {
       log('GenreUpdate|err:'+err+'|U:'+req.user, 'error');

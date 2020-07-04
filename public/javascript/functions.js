@@ -45,3 +45,24 @@ async function getCountriesSelect(old, current) {
     countries_select.appendChild(option);
   });
 }
+
+async function getPublishersSelect(old, current) {
+  let response;
+  try {
+    response = await axios.get('/editora/todos');
+  } catch (error) {
+    response = {};
+    console.error(error);
+  }
+  let publishers = response.data.publishers;
+  let publishers_select = document.getElementById(current);
+  publishers.forEach(el => {
+    let option = document.createElement("option");
+    option.text = el.name;
+    option.value = el._id;
+    if (el._id == document.getElementById(old).value ) {
+      option.selected = "selected";
+    }
+    publishers_select.appendChild(option);
+  });
+}

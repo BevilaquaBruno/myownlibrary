@@ -20,7 +20,7 @@ router.get('/',
     typeModel.find().select('-createdAt -updatedAt').then(types => {
       res.render('type/list', { success: true, message : req.flash('tip'), types: helper.tojson(types) });
     }).catch(err => {
-      res.render('type/list', { success: false, message : 'Erro ao buscar autores', types: [] });
+      res.render('type/list', { success: false, message : 'Erro ao buscar Tipos', types: [] });
     });
   }
 );

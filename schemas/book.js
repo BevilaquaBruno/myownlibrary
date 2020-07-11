@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 
 var bookSchema = mongoose.Schema({
   name: { type: String, required: true },
-  release_date: { type: String, required: true },
+  release_date: { type: String },
   number_pages: { type: String, required: true },
   description: { type: String },
   comments: [{ body: String, date: String }],
   votes: { positives: Number, negatives: Number },
   language_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Language' },
-  publisher: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
+  publisher_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
   country_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Country' },
   author_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
   genre_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Genre' },
@@ -18,4 +18,4 @@ var bookSchema = mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Book', authorSchema, 'book');
+module.exports = mongoose.model('Book', bookSchema, 'book');

@@ -1,0 +1,12 @@
+books list
+{{ message }}
+<br>
+{{#if success}}
+  {{#each books}}
+    {{ this.name }} - {{ this.release_date }}
+      <a href="/livro/atualizar/{{this._id}}">atualizar</a>&nbsp;
+      <a href="/livro/excluir/{{this._id}}">Deletar</a>
+    <br>
+  {{/each}}
+{{/if}}
+<a href="/livro/cadastrar">Cadastrar novo Livro</a>

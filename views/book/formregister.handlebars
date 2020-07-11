@@ -1,0 +1,81 @@
+<div>
+  {{message}}
+</div>
+{{#if newBook}}
+  <form action="/livro/cadastrar" method="post">
+{{else}}
+  <form action="/livro/atualizar" method="post">
+{{/if}}
+  <input type="hidden" name="old_language_id" id="old_language_id" value="{{book.language_id}}">
+  <input type="hidden" name="old_publisher_id" id="old_publisher_id" value="{{book.publisher_id}}">
+  <input type="hidden" name="old_country_id" id="old_country_id" value="{{book.country_id}}">
+  <input type="hidden" name="old_author_id" id="old_author_id" value="{{book.author_id}}">
+  <input type="hidden" name="old_genre_id" id="old_genre_id" value="{{book.genre_id}}">
+  <input type="hidden" name="old_type_id" id="old_type_id" value="{{book.type_id}}">
+  <input type="hidden" name="release_date" id="release_date" value="{{book.release_date}}">
+  <div>
+    <input type="hidden" name="_id" id="_id" value="{{book._id}}">
+  </div>
+  <div>
+    Nome:
+    <input type="text" name="name" id="name" value="{{book.name}}">
+  </div>
+  <div>
+    Data de Publicação:
+    <input onblur="formatDateInput(this,'release_date');" type="date" name="release_date_input" id="release_date_input" value="{{book.release_date}}">
+  </div>
+  <div>
+    Número de Páginas:
+    <input type="number" name="number_pages" id="number_pages" value="{{book.number_pages}}">
+  </div>
+  <div>
+    Descrição:
+    <input type="text" name="description" id="description" value="{{book.description}}">
+  </div>
+  <div>
+    Idioma
+    <select name="language_id" id="language_id">
+      <option value="">Nenhuma</option>
+    </select>
+  </div>
+  <div>
+    Editora
+    <select name="publisher_id" id="publisher_id">
+      <option value="">Nenhuma</option>
+    </select>
+  </div>
+  <div>
+    País
+    <select name="country_id" id="country_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    Autores
+    <select name="author_id" id="author_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    Gênero
+    <select name="genre_id" id="genre_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    Tipo
+    <select name="type_id" id="type_id">
+      <option value="">Nenhum</option>
+    </select>
+  </div>
+  <div>
+    {{#if newBook}}
+      <input type="submit" name="btnsubmit" value="Cadastrar">
+    {{else}}
+      <input type="submit" name="btnsubmit" value="Atualizar">
+    {{/if}}
+    <br>
+    <a href="/livro">Lista de Livros</a>
+  </div>
+</form>
+<script type="application/javascript" src="/public/javascript/formBook.js"></script>

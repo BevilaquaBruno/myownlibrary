@@ -114,6 +114,7 @@ var countryRouter = require('./routes/country');
 var typeRouter = require('./routes/type');
 var genreRouter = require('./routes/genre');
 var publisherRouter = require('./routes/publisher');
+var bookRouter = require('./routes/book');
 
 app.use('/usuario', userRouter);
 app.use('/autor', authorRouter);
@@ -122,6 +123,7 @@ app.use('/pais', countryRouter);
 app.use('/tipo', typeRouter);
 app.use('/genero', genreRouter);
 app.use('/editora', publisherRouter);
+app.use('/livro', bookRouter);
 
 app.use('*', function (req, res) {
     res.render('404Page');

@@ -12,6 +12,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
+    "gralig": "^0.5.0",
     "helmet": "^3.23.0",
     "log-to-file": "^2.0.2",
     "md5": "^2.2.1",

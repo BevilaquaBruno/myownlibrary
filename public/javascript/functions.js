@@ -1,7 +1,28 @@
+window.onload = function () {
+  main();
+}
+
 function formatDateInput(f, fVal) {
   moment.locale('pt-br');
   if (f.value != '')
     document.getElementById(fVal).value = moment(f.value).format('YYYY-MM-DD');
+}
+
+function main() {
+  selectMenu(window.location.pathname.split('/')[1]);
+}
+
+function selectMenu(path) {
+  if (path != '') {
+    let el = document.getElementsByClassName('current'+path)[0];
+    console.log(el);
+    el.classList.add('current');
+    el.setAttribute('aria-current', 'page');
+  }else if (path == ''){
+    let el = document.getElementsByClassName('currenthome')[0];
+    el.classList.add('current');
+    el.setAttribute('aria-current', 'page');
+  }
 }
 
 async function getLanguagesSelect(old, current) {

@@ -7,25 +7,61 @@
     <script type="application/javascript" src="/moment/moment.js"></script>
     <script type="application/javascript" src="/public/javascript/functions.js"></script>
     <script type="application/javascript" src="/moment/locale/pt.js" charset="UTF-8"></script>
+
+    <link rel="stylesheet" href="/gralig/gralig.min.css" />
 </head>
-<body style="background-color: darkgray;">
-  <div>
-    Main Layout
-    <a href="/">Home</a>
-    {{#if isLogged}}
-      <a href="/logout">logout</a>
-    {{else}}
-      <a href="/login">login</a>
-    {{/if}}
-    <a href="/usuario">Usuários</a>
-    <a href="/autor">Autores</a>
-    <a href="/pais">Países</a>
-    <a href="/idioma">Idiomas</a>
-    <a href="/tipo">Tipos</a>
-    <a href="/genero">Gêneros</a>
-    <a href="/editora">Editoras</a>
-    <a href="/livro">Livros</a>
-  </div>
+<body class="dark">
+  <header class="navbar">
+    <div class="container">
+      <div class="navbar-logo">
+        <a class="navbar-logo-link" href="#">
+          <img class="navbar-logo-img" src="https://res.cloudinary.com/erenesto/image/upload/v1587055102/wdrsnzjfdlxvv2vvfspx.svg" alt="" />
+        </a>
+      </div>
+      <div class="navbar-content">
+        <nav>
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link currenthome" href="/">Home</a>
+            </li>
+            {{#if isLogged}}
+              <li class="nav-item">
+                <a class="nav-link currentlivro" href="/livro">Livros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currentautor" href="/autor">Autores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currentpais" href="/pais">Países</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currentidioma" href="/idioma">Idiomas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currenttipo" href="/tipo">Tipos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currentgenero" href="/genero">Gêneros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currenteditora" href="/editora">Editoras</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currentusuario" href="/usuario">Usuários</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link currentlogout" href="/logout">Logout</a>
+              </li>
+            {{else}}
+              <li class="nav-item">
+                <a class="nav-link currentlogin" href="/login">Login</a>
+              </li>
+            {{/if}}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
     {{{body}}}
 
 </body>

@@ -67,7 +67,7 @@ passport.deserializeUser(function(id, callback) {
   });
 
 app.use('*', function (req, res, next) {
-  app.locals.pagetitle = 'Bilioteca Bevilaqua';
+  app.locals.pagetitle = 'Biblioteca Bevilaqua';
   if (req.user) {
     app.locals.isLogged = true;
     app.locals.user = req.user;

@@ -1,5 +1,22 @@
 window.onload = function () {
   main();
+  changeThemeBody(true);
+}
+
+function changeThemeBody(init = false){
+  let sun = '/public/imgs/sun.svg';
+  let moon = '/public/imgs/moon.svg';
+  let bd = document.getElementsByTagName('body')[0];
+  if (init === false) {
+    bd.classList.toggle('dark');
+    bd.classList.toggle('light');
+  }
+  clist = bd.classList[0] || 'light';
+  if (clist === 'dark')
+    document.getElementById('spanChangeTheme').innerHTML = '<img src="'+sun+'">';
+  else
+    document.getElementById('spanChangeTheme').innerHTML = '<img src="'+moon+'">';
+  axios.get('/setTheme/'+clist);
 }
 
 function formatDateInput(f, fVal) {
@@ -15,7 +32,6 @@ function main() {
 function selectMenu(path) {
   if (path != '') {
     let el = document.getElementsByClassName('current'+path)[0];
-    console.log(el);
     el.classList.add('current');
     el.setAttribute('aria-current', 'page');
   }else if (path == ''){

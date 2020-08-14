@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="/gralig/gralig.min.css" />
 </head>
-<body class="dark">
+<body class="{{ theme }}">
   <header class="navbar">
     <div class="container">
       <div class="navbar-logo">
@@ -50,13 +50,19 @@
                 <a class="nav-link currentusuario" href="/usuario">Usuários</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link currentlogout" href="/logout">Logout</a>
+                <a class="nav-link currentlogout" href="/logout">
+                Sair
+                </a>
               </li>
             {{else}}
               <li class="nav-item">
                 <a class="nav-link currentlogin" href="/login">Login</a>
               </li>
             {{/if}}
+            <li>
+              <span id="spanChangeTheme" onclick="changeThemeBody();" style="cursor: pointer;">
+              </span>
+            </li>
           </ul>
         </nav>
       </div>

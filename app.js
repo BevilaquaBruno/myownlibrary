@@ -69,6 +69,10 @@ passport.deserializeUser(function(id, callback) {
 
 app.use('*', function (req, res, next) {
   app.locals.pagetitle = 'Biblioteca Bevilaqua';
+  if (!req.session.theme)
+    req.session.theme = 'dark';
+  app.locals.theme = req.session.theme;
+
   if (req.user) {
     app.locals.isLogged = true;
     app.locals.user = req.user;
@@ -78,7 +82,12 @@ app.use('*', function (req, res, next) {
 
 app.get('/', function (req, res) {
   res.render('home');
-})
+});
+
+app.get('/setTheme/:theme', function (req, res) {
+  req.session.theme = req.params.theme;
+  res.json({msg: 'Theme changed successfully'});
+});
 
 app.get('/login',
   conn.ensureLoggedOut('/livro'),

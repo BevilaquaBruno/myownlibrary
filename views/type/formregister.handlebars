@@ -1,25 +1,25 @@
-<div>
-  {{message}}
-</div>
 {{#if newType}}
-  <form action="/tipo/cadastrar" method="post">
+  <form id="formType" action="/tipo/cadastrar" method="post">
 {{else}}
-  <form action="/tipo/atualizar" method="post">
+  <form id="formType" action="/tipo/atualizar" method="post">
 {{/if}}
-  <div>
-    <input type="hidden" name="_id" id="_id" value="{{type._id}}">
-  </div>
-  <div>
-    Nome:
-    <input type="text" name="description" id="description" value="{{type.description}}">
-  </div>
-  <div>
-    {{#if newType}}
-      <input type="submit" name="btnsubmit" value="Cadastrar">
-    {{else}}
-      <input type="submit" name="btnsubmit" value="Atualizar">
-    {{/if}}
-    <br>
-    <a href="/tipo">Lista de Tipos</a>
-  </div>
+  <input style="display: none;" type="hidden" name="_id" id="_id" value="{{type._id}}">
+  <fieldset>
+    <legend>
+      <h4 class="heading">Cadastrar Tipo</h4>
+    </legend>
+    <span style="display: none;" id="mainAlert" class="alert alert-red" role="alert">{{ message }}</span>
+    <div class="form-group">
+      <label for="description">Descrição</label>
+      <input type="text" name="description" id="description" placeholder="Descrição" value="{{type.description}}">
+    </div>
+    <div class="form-actions">
+      {{#if newType}}
+        <button class="btn btn-green" name="btnsubmit" onclick="document.getElementById('formType').submit()" >Cadastrar</button>
+      {{else}}
+        <button class="btn btn-green" name="btnsubmit" onclick="document.getElementById('formType').submit()" >Atualizar</button>
+      {{/if}}
+      <a class="btn btn-red" href="/tipo">Cancelar</a>
+    </div>
+  </fieldset>
 </form>

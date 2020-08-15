@@ -27,6 +27,21 @@ function formatDateInput(f, fVal) {
 
 function main() {
   selectMenu(window.location.pathname.split('/')[1]);
+  verifyAlert('mainAlert');
+}
+
+function verifyAlert(id) {
+  if (document.getElementById(id).style.display === 'none' && document.getElementById(id).innerHTML != '') {
+    _('mainAlert').fade('in', 500);
+    let tmt = timeout(5500);
+    tmt.then(()=>{
+      _('mainAlert').fade('out', 1000);
+    });
+  }
+}
+
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function selectMenu(path) {
@@ -154,7 +169,7 @@ async function getTypesSelect(old, current) {
     response = {};
     console.error(error);
   }
-  let types = response.data.types;
+  let types = response.data.data;
   let types_select = document.getElementById(current);
   types.forEach(el => {
     let option = document.createElement("option");
@@ -165,4 +180,47 @@ async function getTypesSelect(old, current) {
     }
     types_select.appendChild(option);
   });
+}
+
+async function getDataForTable(url) {
+  try {
+    response = await axios.get(url);
+  } catch (error) {
+    response = {}.
+    console.error(error);
+  }
+  let data = response.data.data;
+  return data;
+}
+
+function _(el) {
+  if (!(this instanceof _)) {
+    return new _(el);
+  }
+  this.el = document.getElementById(el);
+}
+
+//fade in/out
+_.prototype.fade = function fade(type, ms) {
+  var isIn = type === 'in',
+    opacity = isIn ? 0 : 1,
+    interval = 50,
+    duration = ms,
+    gap = interval / duration,
+    self = this;
+
+  if(isIn) {
+    self.el.style.display = 'inline';
+    self.el.style.opacity = opacity;
+  }
+
+  function func() {
+    opacity = isIn ? opacity + gap : opacity - gap;
+    self.el.style.opacity = opacity;
+
+    if(opacity <= 0) self.el.style.display = 'none'
+    if(opacity <= 0 || opacity >= 1) window.clearInterval(fading);
+  }
+
+  var fading = window.setInterval(func, interval);
 }

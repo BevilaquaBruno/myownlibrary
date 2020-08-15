@@ -9,7 +9,7 @@ router.get('/todos',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     typeModel.find().then(function (types) {
-        res.json({ types: types });
+        res.json({ data: types });
     })
   }
 );
@@ -17,11 +17,7 @@ router.get('/todos',
 router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    typeModel.find().select('-createdAt -updatedAt').then(types => {
-      res.render('type/list', { success: true, message : req.flash('tip'), types: helper.tojson(types) });
-    }).catch(err => {
-      res.render('type/list', { success: false, message : 'Erro ao buscar Tipos', types: [] });
-    });
+    res.render('type/list', { success: true, message : req.flash('tip')});
   }
 );
 

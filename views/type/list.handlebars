@@ -1,12 +1,28 @@
-types list
-{{ message }}
+<h3>Tipos</h3>
+<div class="row">
+  <div class="col">
+    <a class="btn btn-green" href="/tipo/cadastrar">Cadastrar novo Tipo</a>
+  </div>
+  <div class="col"></div>
+  <div class="col">
+    <span style="display: none;" id="mainAlert" class="alert alert-blue" role="alert">{{ message }}</span>
+  </div>
+</div>
 <br>
-{{#if success}}
-  {{#each types}}
-    {{ this.description }}
-      <a href="/tipo/atualizar/{{this._id}}">atualizar</a>&nbsp;
-      <a href="/tipo/excluir/{{this._id}}">Deletar</a>
-    <br>
-  {{/each}}
-{{/if}}
-<a href="/tipo/cadastrar">Cadastrar novo Tipo</a>
+<div class="row">
+  <div class="col">
+    <div class="table-wrapper">
+      <table class="table table-bordered" id="tableType">
+        <thead>
+          <tr>
+            <td>Descrição</td>
+            <td style="width: 14%;">Ações</td>
+          </tr>
+        </thead>
+        <tbody id="tableTypeBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="application/javascript" src="/public/javascript/listtype.js"></script>

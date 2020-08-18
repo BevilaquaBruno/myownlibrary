@@ -1,5 +1,10 @@
 window.onload = function () {
   main();
+}
+
+function main() {
+  selectMenu(window.location.pathname.split('/')[1]);
+  verifyAlert('mainAlert');
   changeThemeBody(true);
 }
 
@@ -25,13 +30,8 @@ function formatDateInput(f, fVal) {
     document.getElementById(fVal).value = moment(f.value).format('YYYY-MM-DD');
 }
 
-function main() {
-  selectMenu(window.location.pathname.split('/')[1]);
-  verifyAlert('mainAlert');
-}
-
 function verifyAlert(id) {
-  if (document.getElementById(id).style.display === 'none' && document.getElementById(id).innerHTML != '') {
+  if (document.getElementById(id)?.style?.display === 'none' && document.getElementById(id)?.innerHTML != '') {
     _('mainAlert').fade('in', 500);
     let tmt = timeout(5500);
     tmt.then(()=>{
@@ -200,7 +200,6 @@ function _(el) {
   this.el = document.getElementById(el);
 }
 
-//fade in/out
 _.prototype.fade = function fade(type, ms) {
   var isIn = type === 'in',
     opacity = isIn ? 0 : 1,

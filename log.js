@@ -2,7 +2,7 @@ const logger = require('log-to-file');
 
 var f = {
   "log": function (data, state) {
-    logger('------ INICIO LOG -------'+JSON.stringify(data)+'------ FINAL LOG -------', __dirname+'/logs/'+state+'.log');
+    logger('------ START LOG -------'+JSON.stringify(data)+'------ END LOG -------', __dirname+'/logs/'+state+'.log');
   }
 }
 

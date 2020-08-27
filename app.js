@@ -14,7 +14,7 @@ require('dotenv').config()
 
 var app = express()
 
-mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@ds259154.mlab.com:59154/'+process.env.DB_HOST+'', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

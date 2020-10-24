@@ -8,8 +8,8 @@ var log = require('../log').log;
 router.get('/todos',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    publisherModel.find().then(function (publishers) {
-        res.json({ publishers: publishers });
+    publisherModel.find().populate('country_id').then(function (publishers) {
+        res.json({ data: publishers });
     })
   }
 );
@@ -17,11 +17,7 @@ router.get('/todos',
 router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    publisherModel.find().populate('country_id').select('-createdAt -updatedAt').then(publishers => {
-      res.render('publisher/list', { success: true, message : req.flash('tip'), publishers: helper.tojson(publishers) });
-    }).catch(err => {
-      res.render('publisher/list', { success: false, message : 'Erro ao buscar editoras', publishers: [] });
-    });
+    res.render('publisher/list', { success: true, message : req.flash('tip')});
   }
 );
 
@@ -35,8 +31,11 @@ router.get('/cadastrar',
 router.post('/cadastrar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    if (req.body.name == '') {
+    if (req.body.name === '') {
       return res.render('publisher/formregister', { message: 'Nome é obrigatório.', newPublisher: true, publisher: req.body });
+    }
+    if (req.body.country_id == '') {
+      return res.render('publisher/formregister', { message: 'País é obrigatório.', newPublisher: true, publisher: req.body });
     }
     let newPublisher = new publisherModel({ name: req.body.name, country_id: req.body.country_id });
     newPublisher.save().then(publisher => {
@@ -71,14 +70,16 @@ router.get('/atualizar/:id',
 router.post('/atualizar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    if (req.body.name == '') {
-      return res.render('publisher/formregister', { message: 'Nome é obrigatório.', newPublisher: false, publisher: req.body });
-    }
     if (req.body._id == '') {
       req.flash('tip', 'Erro grave ao atualizar editora, comece de novo.');
       res.redirect('/editora');
     }
-
+    if (req.body.name == '') {
+      return res.render('publisher/formregister', { message: 'Nome é obrigatório.', newPublisher: false, publisher: req.body });
+    }
+    if (req.body.country_id == '') {
+      return res.render('publisher/formregister', { message: 'País é obrigatório.', newPublisher: true, publisher: req.body });
+    }
     publisherModel.findOneAndUpdate({ _id: req.body._id }, { name: req.body.name, country_id: req.body.country_id })
     .then( publisher => {
       req.flash('tip', 'Editora atualizada com sucesso !');

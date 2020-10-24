@@ -1,33 +1,45 @@
-<div>
-  {{message}}
-</div>
 {{#if newPublisher }}
-  <form action="/editora/cadastrar" method="post">
+  <form id="formPublisher" action="/editora/cadastrar" method="post">
 {{else}}
-  <form action="/editora/atualizar" method="post">
+  <form id="formPublisher" action="/editora/atualizar" method="post">
 {{/if}}
   <div>
     <input type="hidden" name="_id" id="_id" value="{{publisher._id}}">
     <input type="hidden" name="old_country_id" id="old_country_id" value="{{publisher.country_id}}">
   </div>
-  <div>
-    Nome
-    <input type="text" name="name" id="name" value="{{publisher.name}}">
-  </div>
-  <div>
-    País:
-    <select name="country_id" id="country_id">
-      <option value="">Nenhum</option>
-    </select>
-  </div>
-  <div>
+  <fieldset>
+    <legend>
+      {{#if newPublisher }}
+        <h4 class="heading">Cadastrar Editora</h4>
+      {{else}}
+        <h4 class="heading">Atualizar Editora</h4>
+      {{/if}}
+    </legend>
+    <span style="display: none;" id="mainAlert" class="alert alert-red" role="alert">{{ message }}</span>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input type="text" name="name" id="name" placeholder="Nome" value="{{publisher.name}}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>País</label>
+          <select name="country_id" id="country_id">
+            <option value="">Nenhum</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-actions">
     {{#if newPublisher}}
-      <input type="submit" name="btnsubmit" value="Cadastrar">
+      <button class="btn btn-green btn-small" name="btnsubmit" onclick="document.getElementById('formPublisher').submit()" >Cadastrar</button>
     {{else}}
-      <input type="submit" name="btnsubmit" value="Atualizar">
+      <button class="btn btn-green btn-small" name="btnsubmit" onclick="document.getElementById('formPublisher').submit()" >Atualizar</button>
     {{/if}}
-    <br>
-    <a href="/autor">Lista de Editoras</a>
+    <a class="btn btn-red btn-small" href="/editora">Cancelar</a>
   </div>
 </form>
 <script type="application/javascript" src="/public/javascript/formpublisher.js"></script>

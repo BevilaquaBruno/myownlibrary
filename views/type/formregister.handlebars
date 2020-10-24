@@ -6,7 +6,11 @@
   <input style="display: none;" type="hidden" name="_id" id="_id" value="{{type._id}}">
   <fieldset>
     <legend>
-      <h4 class="heading">Cadastrar Tipo</h4>
+      {{#if newType}}
+        <h4 class="heading">Cadastrar Tipo</h4>
+      {{else}}
+        <h4 class="heading">Atualizar Tipo</h4>
+      {{/if}}
     </legend>
     <span style="display: none;" id="mainAlert" class="alert alert-red" role="alert">{{ message }}</span>
     <div class="form-group">

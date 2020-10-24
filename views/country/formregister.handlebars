@@ -1,25 +1,29 @@
-<div>
-  {{message}}
-</div>
 {{#if newCountry}}
-  <form action="/pais/cadastrar" method="post">
+  <form id="formCountry" action="/pais/cadastrar" method="post">
 {{else}}
-  <form action="/pais/atualizar" method="post">
+  <form id="formCountry" action="/pais/atualizar" method="post">
 {{/if}}
-  <div>
-    <input type="hidden" name="_id" id="_id" value="{{country._id}}">
-  </div>
-  <div>
-    Nome:
-    <input type="text" name="name" id="name" value="{{country.name}}">
-  </div>
-  <div>
-    {{#if newCountry}}
-      <input type="submit" name="btnsubmit" value="Cadastrar">
-    {{else}}
-      <input type="submit" name="btnsubmit" value="Atualizar">
-    {{/if}}
-    <br>
-    <a href="/pais">Lista de países</a>
-  </div>
+  <input type="hidden" name="_id" id="_id" value="{{country._id}}">
+  <fieldset>
+    <legend>
+      {{#if newCountry}}
+        <h4 class="heading">Cadastrar País</h4>
+      {{else}}
+        <h4 class="heading">Atualizar País</h4>
+      {{/if}}
+    </legend>
+    <span style="display: none;" id="mainAlert" class="alert alert-red" role="alert">{{ message }}</span>
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input type="text" name="name" id="name" placeholder="Nome" value="{{country.name}}">
+    </div>
+    <div class="form-actions">
+      {{#if newCountry}}
+        <button class="btn btn-green btn-small" name="btnsubmit" onclick="document.getElementById('formCountry').submit()" >Cadastrar</button>
+      {{else}}
+        <button class="btn btn-green btn-small" name="btnsubmit" onclick="document.getElementById('formCountry').submit()" >Atualizar</button>
+      {{/if}}
+      <a class="btn btn-red btn-small" href="/pais">Cancelar</a>
+    </div>
+  </fieldset>
 </form>

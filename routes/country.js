@@ -9,7 +9,7 @@ router.get('/todos',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     countryModel.find().then(function (countries) {
-        res.json({ countries: countries });
+        res.json({ data: countries });
     })
   }
 );
@@ -17,11 +17,7 @@ router.get('/todos',
 router.get('/',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    countryModel.find().select('-createdAt -updatedAt').then(countries => {
-      res.render('country/list', { success: true, message : req.flash('tip'), countries: helper.tojson(countries) });
-    }).catch(err => {
-      res.render('country/list', { success: false, message : 'Erro ao buscar autores', countries: [] });
-    });
+    res.render('country/list', { success: true, message : req.flash('tip')});
   }
 );
 
@@ -71,23 +67,23 @@ router.get('/atualizar/:id',
 router.post('/atualizar',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
-    if (req.body.name == '') {
-      return res.render('country/formregister', { message: 'Nome é obrigatório.', newCountry: false, country: req.body });
-    }
     if (req.body._id == '') {
       req.flash('tip', 'Erro grave ao atualizar país, comece de novo.');
       res.redirect('/pais');
     }
+    if (req.body.name == '') {
+      return res.render('country/formregister', { message: 'Nome é obrigatório.', newCountry: false, country: req.body });
+    }
 
     countryModel.findOneAndUpdate({ _id: req.body._id }, { name: req.body.name })
-    .then( country => {
-      req.flash('tip', 'País atualizado com sucesso !');
-      log('CountryUpdate|Country:'+country+'|U:'+req.user, 'success');
-      res.redirect('/pais');
-    }).catch(err => {
-      log('CountryUpdate|err:'+err+'|U:'+req.user, 'error');
-      return res.render('country/formregister', { message: 'Erro ao atualizar país.', newCountry: false, country: req.body });
-    });
+      .then( country => {
+        req.flash('tip', 'País atualizado com sucesso !');
+        log('CountryUpdate|Country:'+country+'|U:'+req.user, 'success');
+        res.redirect('/pais');
+      }).catch(err => {
+        log('CountryUpdate|err:'+err+'|U:'+req.user, 'error');
+        return res.render('country/formregister', { message: 'Erro ao atualizar país.', newCountry: false, country: req.body });
+      });
   }
 );
 

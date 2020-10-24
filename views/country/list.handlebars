@@ -1,12 +1,29 @@
-countries list
-{{ message }}
+<h3>Países</h3>
+<div class="row">
+  <div class="col">
+    <a class="btn btn-green btn-small" href="/pais/cadastrar">Cadastrar novo País</a>
+  </div>
+  <div class="col"></div>
+  <div class="col">
+    <span style="display: none;" id="mainAlert" class="alert alert-blue" role="alert">{{ message }}</span>
+  </div>
+</div>
 <br>
-{{#if success}}
-  {{#each countries}}
-    {{ this.name }}
-      <a href="/pais/atualizar/{{this._id}}">atualizar</a>&nbsp;
-      <a href="/pais/excluir/{{this._id}}">Deletar</a>
-    <br>
-  {{/each}}
-{{/if}}
-<a href="/pais/cadastrar">Cadastrar novo País</a>
+<div class="row">
+  <div class="col">
+    <div class="table-wrapper">
+      <table class="table table-bordered" id="tableCountry">
+        <thead>
+          <tr>
+            <th class="clickable">Nome</th>
+            <th style="width: 14%;">Ações</th>
+            <th class="u-none">_id</th>
+          </tr>
+        </thead>
+        <tbody id="tableCountryBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script type="application/javascript" src="/public/javascript/listcountry.js"></script>

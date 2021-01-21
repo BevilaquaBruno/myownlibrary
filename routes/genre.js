@@ -9,7 +9,7 @@ router.get('/todos',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     genreModel.find().then(function (genres) {
-        res.json({ genres: genres });
+        res.json({ data: genres });
     })
   }
 );

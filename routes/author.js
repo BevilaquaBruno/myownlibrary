@@ -25,7 +25,7 @@ router.get('/todos',
   conn.ensureLoggedIn('/login'),
   function (req, res) {
     authorModel.find().then(function (authors) {
-        res.json({ authors: authors });
+        res.json({ data: authors });
     })
   }
 );

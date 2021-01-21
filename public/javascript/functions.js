@@ -85,7 +85,7 @@ async function getCountriesSelect(old, current) {
     response = {};
     console.error(error);
   }
-  let countries = response.data.countries;
+  let countries = response.data.data;
   let countries_select = document.getElementById(current);
   countries.forEach(el => {
     let option = document.createElement("option");
@@ -106,7 +106,7 @@ async function getPublishersSelect(old, current) {
     response = {};
     console.error(error);
   }
-  let publishers = response.data.publishers;
+  let publishers = response.data.data;
   let publishers_select = document.getElementById(current);
   publishers.forEach(el => {
     let option = document.createElement("option");
@@ -127,7 +127,7 @@ async function getAuthorsSelect(old, current) {
     response = {};
     console.error(error);
   }
-  let authors = response.data.authors;
+  let authors = response.data.data;
   let authors_select = document.getElementById(current);
   authors.forEach(el => {
     let option = document.createElement("option");
@@ -148,7 +148,7 @@ async function getGenresSelect(old, current) {
     response = {};
     console.error(error);
   }
-  let genres = response.data.genres;
+  let genres = response.data.data;
   let genres_select = document.getElementById(current);
   genres.forEach(el => {
     let option = document.createElement("option");
